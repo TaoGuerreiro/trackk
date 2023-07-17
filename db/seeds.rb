@@ -11,4 +11,3 @@ Server.destroy_all
 User.destroy_all
 
 tao = User.create(email: 'florent.guilbaud@gmail.com', password: '123456')
-Server.create(name: "TBA", user: tao, token: 'MTEyODMwMDkxNTA5OTY5NzIyMw.GHyguY.CxVPHGSU71yUvvuFrsSkpVhsUb4vFJgw52Zwl0', root_folder_id: '1ye7NFZ-dGBwFMLRtJm-oJR05mwZYDx1x')
