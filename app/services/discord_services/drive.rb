@@ -114,7 +114,7 @@ module DiscordServices
       channel_id = SecureRandom.uuid
       resource_id = SecureRandom.uuid # L'id de la ressource est généré par votre application, il est utilisé pour s'assurer que les notifications que vous recevez proviennent bien de Google.
       channel_type = 'web_hook'
-      channel_address = 'https://bicicouriers.eu.ngrok.io/google_drive/webhook'
+      channel_address = 'https://app-38600867-3dd4-4197-a5e7-e56a87990760.cleverapps.io/google_drive/webhook'
       channel = Google::Apis::DriveV3::Channel.new(address: channel_address, type: channel_type, id: channel_id,
                                                    resource_id:)
       @service.watch_file(file_id, channel)
