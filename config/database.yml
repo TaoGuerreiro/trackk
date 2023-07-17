@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: trackk_production
-  username: trackk
-  password: <%= ENV["TRACKK_DATABASE_PASSWORD"] %>
+  url: <%= ENV['POSTGRESQL_ADDON_URI'] %>
