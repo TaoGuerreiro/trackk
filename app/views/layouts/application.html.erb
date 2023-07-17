@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="h-full bg-white">
   <head>
     <title>Trackk</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -10,9 +10,9 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
   </head>
 
-  <body>
+  <body class="h-full">
     <%= render "shared/navbar" %>
-    <div class="max-w-7xl mx-auto pt-10">
+    <div class="h-full <%= "mx-auto pt-10 max-w-7xl" if current_user %>">
       <%= yield %>
     </div>
   </body>

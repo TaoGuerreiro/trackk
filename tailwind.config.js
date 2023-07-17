@@ -24,5 +24,8 @@ module.exports = {
         current: 'currentColor',
       }
     }
-  }
+  },
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
 }
