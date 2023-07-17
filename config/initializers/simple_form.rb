@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 # config/initializers/simple_form.rb
 
 SimpleForm.setup do |config|
-
   config.wrappers :floating_label, tag: 'div', class: 'form-group relative', error_class: 'has-error' do |b|
     b.use :html5
     b.use :placeholder
@@ -24,7 +25,7 @@ SimpleForm.setup do |config|
   config.generate_additional_classes_for = ['field']
 
   config.required_by_default = false
-  config.label_text = lambda { |label, required, explicit_label| "#{label}" }
+  config.label_text = ->(label, _required, _explicit_label) { label.to_s }
 
   config.browser_validations = false
 end

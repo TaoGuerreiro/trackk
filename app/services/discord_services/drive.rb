@@ -49,7 +49,7 @@ module DiscordServices
       file = @service.create_file(file_metadata, fields: 'id')
 
       file_metadata = {
-        name: "tracks",
+        name: 'tracks',
         mime_type: 'application/vnd.google-apps.folder',
         parents: [file.id]
       }
@@ -60,7 +60,7 @@ module DiscordServices
         type: 'user',
         role: 'writer',
         sendNotificationEmail: false,
-        email_address: "florent.guilbaud@gmail.com"
+        email_address: 'florent.guilbaud@gmail.com'
       )
 
       # Applique la permission au dossier
@@ -69,10 +69,14 @@ module DiscordServices
         permission,
         email_message: "Vous avez maintenant accès à ce dossier : #{name}"
       )
+
       {
         tracks: tracks_folder.id,
         root: file.id
       }
+    rescue StandardError => e
+      Rails.logger.error "Failed to create root folder: #{e.message}"
+      redirect_to servers_path, notice: 'Failed to create root folder'
     end
 
     def create_folder(event, webhook_url)
@@ -108,14 +112,14 @@ module DiscordServices
     def set_webhook(file_id, webhook_url, server)
       # Vous devez configurer l'authentification avant cette étape
       channel_id = SecureRandom.uuid
-      resource_id = SecureRandom.uuid  # L'id de la ressource est généré par votre application, il est utilisé pour s'assurer que les notifications que vous recevez proviennent bien de Google.
+      resource_id = SecureRandom.uuid # L'id de la ressource est généré par votre application, il est utilisé pour s'assurer que les notifications que vous recevez proviennent bien de Google.
       channel_type = 'web_hook'
       channel_address = 'https://bicicouriers.eu.ngrok.io/google_drive/webhook'
       channel = Google::Apis::DriveV3::Channel.new(address: channel_address, type: channel_type, id: channel_id,
                                                    resource_id:)
       @service.watch_file(file_id, channel)
       # ::DriveFolder.create(channel_id:, resource_id:, file_id:, webhook_url:)
-      Folder.create(channel_id:, resource_id:, drive_folder_id: file_id, webhook_url: webhook_url, server:)
+      Folder.create(channel_id:, resource_id:, drive_folder_id: file_id, webhook_url:, server:)
     end
 
     def stop_channel(channel_id, resource_id)

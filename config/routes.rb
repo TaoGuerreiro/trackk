@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  require "sidekiq/web"
+  require 'sidekiq/web'
   devise_for :users
   root to: 'servers#index'
 

@@ -10,13 +10,13 @@ gem 'bootsnap', require: false
 gem 'cssbundling-rails'
 gem 'devise'
 gem 'discordrb'
-gem "google-api-client", require: "google/apis/calendar_v3"
+gem 'google-api-client', require: 'google/apis/calendar_v3'
 gem 'jsbundling-rails'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 5.0'
 gem 'redis', '~> 4.0'
 gem 'sidekiq'
-gem "sidekiq-failures", "~> 1.0"
+gem 'sidekiq-failures', '~> 1.0'
 gem 'simple_form'
 gem 'simple_form-tailwind'
 gem 'sprockets-rails'
@@ -26,7 +26,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
-  gem "pry-byebug"
+  gem 'pry-byebug'
 end
 
 group :development do
