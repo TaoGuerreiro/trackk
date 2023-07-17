@@ -1,0 +1,7 @@
+<div class="max-w-xl pt-10 mx-auto">
+  <%= simple_form_for @server do |field| %>
+    <%= field.input :name, placeholder: "Nom du server" %>
+    <%= field.input :token, placeholder: "Id du server" %>
+    <%= field.submit class: "btn btn-primary" %>
+  <% end %>
+</div>

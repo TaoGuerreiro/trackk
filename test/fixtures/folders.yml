@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  parent_folder_id: 1
+  webhook_url: MyString
+  drive_folder_id: MyString
+  channel_id: MyString
+  resource_id: MyString
+
+two:
+  name: MyString
+  parent_folder_id: 1
+  webhook_url: MyString
+  drive_folder_id: MyString
+  channel_id: MyString
+  resource_id: MyString

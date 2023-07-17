@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  folder_id: 1
+  drive_file_id: MyString
+  folder: one
+
+two:
+  name: MyString
+  folder_id: 1
+  drive_file_id: MyString
+  folder: two
