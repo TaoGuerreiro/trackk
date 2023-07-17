@@ -76,7 +76,7 @@ module DiscordServices
       }
     rescue StandardError => e
       Rails.logger.error "Failed to create root folder: #{e.message}"
-      redirect_to root_path, notice: 'Failed to create root folder'
+      # redirect_to root_path, notice: 'Failed to create root folder'
     end
 
     def create_folder(event, webhook_url)
