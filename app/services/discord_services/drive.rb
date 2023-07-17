@@ -6,14 +6,13 @@ require 'discordrb'
 
 module DiscordServices
   class Drive
-    OOB_URI = 'urn:ietf:wg:oauth:2.0:oob'
-    APPLICATION_NAME = 'UnsafeBot'
+    APPLICATION_NAME = 'taotips-393110'
     SCOPE = Google::Apis::DriveV3::AUTH_DRIVE
 
     def key
       {
         "type": 'service_account',
-        "project_id": 'unsafebot',
+        "project_id": 'taotips-393110',
         "private_key_id": Rails.application.credentials.google_drive.private_key_id,
         "private_key": Rails.application.credentials.google_drive.private_key.gsub('\\n', "\n"),
         "client_email": Rails.application.credentials.google_drive.client_email,
@@ -59,7 +58,7 @@ module DiscordServices
       permission = Google::Apis::DriveV3::Permission.new(
         type: 'user',
         role: 'writer',
-        send_notification_email: true,
+        send_notification_email: false,
         transfer_ownership: true,
         email_address: 'florent.guilbaud@gmail.com'
       )
@@ -111,7 +110,10 @@ module DiscordServices
       channel_id = SecureRandom.uuid
       resource_id = SecureRandom.uuid # L'id de la ressource est généré par votre application, il est utilisé pour s'assurer que les notifications que vous recevez proviennent bien de Google.
       channel_type = 'web_hook'
-      channel_address = 'https://www.taoguerreiro.com/google_drive/webhook'
+
+      channel_address = 'https://www.taoguerreiro.com/google_drive/webhook' if Rails.env.production?
+      channel_address = 'https://bicicouriers.eu.ngrok.io/google_drive/webhook' if Rails.env.development?
+
       channel = Google::Apis::DriveV3::Channel.new(address: channel_address, type: channel_type, id: channel_id,
                                                    resource_id:)
       @service.watch_file(file_id, channel)
