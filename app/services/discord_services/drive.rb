@@ -59,15 +59,15 @@ module DiscordServices
       permission = Google::Apis::DriveV3::Permission.new(
         type: 'user',
         role: 'writer',
-        sendNotificationEmail: false,
+        send_notification_email: true,
+        transfer_ownership: true,
         email_address: 'florent.guilbaud@gmail.com'
       )
 
       # Applique la permission au dossier
       @service.create_permission(
         file.id,
-        permission,
-        email_message: "Vous avez maintenant accès à ce dossier : #{name}"
+        permission
       )
 
       {
