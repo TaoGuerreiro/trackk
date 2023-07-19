@@ -50,12 +50,12 @@ class WebhooksController < ApplicationController
     # Boucle à travers les fichiers existants de folder.drive_files
     folder.documents.each do |file|
       # Si un fichier existant n'est pas dans response.files, alors il a été supprimé
-      unless response_files_hash[file.file_id]
+      unless response_files_hash[file.drive_file_id]
         puts "Fichier supprimé: #{file.name}"
         file.destroy # ou marquez-le comme supprimé, selon vos besoins
       end
       # Retirer le fichier de response_files_hash pour ne pas le traiter à nouveau
-      response_files_hash.delete(file.file_id)
+      response_files_hash.delete(file.drive_file_id)
     end
 
     # Maintenant, response_files_hash ne contient que les nouveaux fichiers
