@@ -15,9 +15,6 @@ class ServersController < ApplicationController
 
   def update; end
 
-
-
-
   def create
     @server = Server.new(server_params)
     @server.user = current_user
