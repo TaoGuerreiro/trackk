@@ -1,2 +1,80 @@
-<h1>Servers#show</h1>
-<p>Find me in app/views/servers/show.html.erb</p>
+<div>
+  <div class="px-4 sm:px-0">
+    <h3 class="text-base font-semibold leading-7 text-gray-900"><%= @server.name %></h3>
+  </div>
+  <div class="mt-6 border-t border-gray-100">
+    <dl class="divide-y divide-gray-100">
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Token</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0"><%= @server.token %></dd>
+      </div>
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Dossier source</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <%= link_to @server.name.capitalize, "https://drive.google.com/drive/folders/#{@server.root_folder_id}", class: "btn" %>
+        </dd>
+      </div>
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Dossier des tracks</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <%= link_to "Tracks", "https://drive.google.com/drive/folders/#{@server.tracks_folder_id}", class: "btn" %>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+
+
+<% @server.root_folder.subfolders.each do |folder| %>
+  <ul role="list" class="divide-y divide-gray-100">
+    <li class="flex items-center justify-between gap-x-6 py-5">
+      <div class="min-w-0">
+        <div class="flex items-start gap-x-3">
+          <p class="text-sm font-semibold leading-6 text-gray-900"><%= folder.name %></p>
+        </div>
+      </div>
+    </li>
+  </ul>
+  <div class="ml-8">
+    <% folder.subfolders.each do |subfolder| %>
+      <ul role="list" class="divide-y divide-gray-100">
+        <li class="flex items-center justify-between gap-x-6 py-5">
+          <div class="min-w-0">
+            <div class="flex items-start gap-x-3">
+              <p class="text-sm font-semibold leading-6 text-gray-900"><%= subfolder.name %></p>
+              <%# <p class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-yellow-800 bg-yellow-50 ring-yellow-600/20">Archived</p> %>
+            </div>
+            <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+              <p class="whitespace-nowrap"><%= subfolder.webhook_url %></p>
+              <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+                <circle cx="1" cy="1" r="1" />
+              </svg>
+              <%# <p class="truncate">Created by Courtney Henry</p> %>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <div class="ml-8">
+        <% subfolder.subfolders.each do |content_folder| %>
+          <ul role="list" class="divide-y divide-gray-100">
+            <li class="flex items-center justify-between gap-x-6 py-5">
+              <div class="min-w-0">
+                <div class="flex items-start gap-x-3">
+                  <p class="text-sm font-semibold leading-6 text-gray-900"><%= content_folder.name %></p>
+                  <%# <p class="rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset text-yellow-800 bg-yellow-50 ring-yellow-600/20">Archived</p> %>
+                </div>
+                <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+                  <p class="whitespace-nowrap"><%= content_folder.webhook_url %></p>
+                  <svg viewBox="0 0 2 2" class="h-0.5 w-0.5 fill-current">
+                    <circle cx="1" cy="1" r="1" />
+                  </svg>
+                  <%# <p class="truncate">Created by Courtney Henry</p> %>
+                </div>
+              </div>
+            </li>
+          </ul>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

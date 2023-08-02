@@ -84,28 +84,28 @@ module DiscordServices
         parents: [server.tracks_folder_id]
       }
       track_folder = @service.create_file(file_metadata, fields: 'id')
-      set_webhook(track_folder.id, webhook_url, server)
+      set_webhook(track_folder.id, webhook_url, server, event.name, server.tracks_folder_id)
 
       file_metadata = {
         name: 'stems',
         mime_type: 'application/vnd.google-apps.folder',
         parents: [track_folder.id]
       }
-      sub_folder = @service.create_file(file_metadata, fields: 'id')
-      set_webhook(sub_folder.id, webhook_url, server)
+      subfolders = @service.create_file(file_metadata, fields: 'id')
+      set_webhook(subfolders.id, webhook_url, server, 'stems', track_folder.id)
 
       file_metadata = {
         name: 'tablatures',
         mime_type: 'application/vnd.google-apps.folder',
         parents: [track_folder.id]
       }
-      sub_folder = @service.create_file(file_metadata, fields: 'id')
-      set_webhook(sub_folder.id, webhook_url, server)
+      subfolders = @service.create_file(file_metadata, fields: 'id')
+      set_webhook(subfolders.id, webhook_url, server, 'tablatures', track_folder.id)
 
       track_folder
     end
 
-    def set_webhook(file_id, webhook_url, server)
+    def set_webhook(file_id, webhook_url, server, name, parent_id)
       # Vous devez configurer l'authentification avant cette étape
       channel_id = SecureRandom.uuid
       resource_id = SecureRandom.uuid # L'id de la ressource est généré par votre application, il est utilisé pour s'assurer que les notifications que vous recevez proviennent bien de Google.
@@ -117,8 +117,10 @@ module DiscordServices
       channel = Google::Apis::DriveV3::Channel.new(address: channel_address, type: channel_type, id: channel_id,
                                                    resource_id:)
       @service.watch_file(file_id, channel)
-      # ::DriveFolder.create(channel_id:, resource_id:, file_id:, webhook_url:)
-      Folder.create(channel_id:, resource_id:, drive_folder_id: file_id, webhook_url:, server:)
+      parent_folder = Folder.find_by(drive_folder_id: parent_id)
+      folder = Folder.create(name:, channel_id:, resource_id:, drive_folder_id: file_id, webhook_url:, server:, parent_folder_id: parent_id)
+      parent_folder.subfolders << folder
+      parent_folder.save
     end
 
     def stop_channel(channel_id, resource_id)

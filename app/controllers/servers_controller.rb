@@ -5,7 +5,9 @@ class ServersController < ApplicationController
     @servers = Server.all
   end
 
-  def show; end
+  def show
+    @server = Server.find(params[:id])
+  end
 
   def new
     @server = Server.new
@@ -22,9 +24,10 @@ class ServersController < ApplicationController
 
     @server.tracks_folder_id = ids[:tracks]
     @server.root_folder_id = ids[:root]
-    Folder.create(root_folder: true, server: @server, drive_folder_id: ids[:root])
-    Folder.create(server: @server, drive_folder_id: ids[:tracks], parent_folder_id: ids[:root])
-
+    root_folder = Folder.create(root_folder: true, server: @server, drive_folder_id: ids[:root])
+    tracks_folder = Folder.create(server: @server, drive_folder_id: ids[:tracks], parent_folder_id: root_folder.id, name: "Tracks")
+    root_folder.subfolders << tracks_folder
+    root_folder.save
     if @server.save
       redirect_to servers_path
     else
